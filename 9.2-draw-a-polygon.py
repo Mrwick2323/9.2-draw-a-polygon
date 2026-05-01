@@ -1,58 +1,73 @@
 from turtle import *
 import math
-def ngon(w):
-    w=w.lower()
-    if w=="triangle":
-        return 3
-    if w=="quadrilateral" or w=="square" or w=="rectangle" or w=="parallelogram" or w=="trapezoid" or w=="kite":
-        return 4
-    if "gon"!=w[-3:]:
-        print(w[-1:-4:-1])
-        return -1
-    else:
-        w=w[:-3]
-    if w=="hecto":
-        return 100
-    names={
-        "kis":1,
-        "cos":10,
-        "do":2,
-        "hen":1,
-        "hena":1,
-        "di":2,
-        "tri":3,
-        "tetra":4,
-        "penta":5,
-        "hexa":6,
-        "hepta":7,
-        "octa":8,
-        "ennea":9,
-        "deca":10,
-        "icosa":20,
-        "icosi":20,
-        "triaconta":30,
-        "tetraconta":40,
-        "pentaconta":50,
-        "hexaconta":60,
-        "heptaconta":70,
-        "octaconta":80,
-        "enneaconta":90,
-        "hecta":100,
-        "hecto":100,
-        "chilia":1000,
-        "myria":10000
-    }
-    tw=[]
-    for i in names.keys():
-        if i in w:
-            tw.append(i)
-    summ=0
-    if tw[-1]=='deca':
-        if names[tw[-2]]<10:
-            summ+=10+names[tw[-2]]
-            tw=tw[:-2]
+sides=int(input('Think of a shape. How many sides does it have?'))
+if sides!=4:
+    print(f"Your shape is a{['n unknown shape!','n unknown shape!','n unknown shape!',' triangle!',' quadrilateral!',' Pentagon!',' Hexagon!'][sides]}") if sides<=6 else print('your shape is an unknown shape!')
+else:
+    if 'y' in input('does your shape have any parallel sides? ').lower():
+        if 'y' in input('does your shape have two sets of parallel sides? ').lower():
+            if 'y' in input('Are all sides the same length?').lower():
+                print('Your shape is a square!')
+                sides='s'
+            if 'y' in input('are all the angles in your shape of equal measure?'):
+                print('Your shape is a rectange!')
+                sides='r'
+            else:
+                print('Your shape is a parallelogram!')
+                sides='p'
         else:
-            sum+=10
-            tw=tw[:-1]
-    
-print(ngon("dodecagon"))
+            print('Your shape is a trapezoid!')
+            sides='t'
+    else:
+        print('Your shape is an unknown quadrilateral!')
+        sides='u'
+screen=Screen()
+turtle=Turtle()
+turtle.speed(0)
+turtle.pu()
+def draw(turtle,s):
+    if s=='s':
+        s=4
+    if type(s)==int:
+        for i in range(s//2):
+            turtle.left(360/s)
+            turtle.forward(100)
+        h=turtle.ycor()
+        turtle.setpos(50,-h/2)
+        turtle.pd()
+        turtle.seth(0)
+        for i in range(s):
+            turtle.left(360/s)
+            turtle.forward(100)
+    elif s=='r':
+        turtle.pu()
+        turtle.setpos(-50,-25)
+        turtle.pd()
+        turtle.setpos(50,-25)
+        turtle.setpos(50,25)
+        turtle.setpos(-50,25)
+        turtle.setpos(-50,-25)
+    elif s=='p':
+        turtle.pu()
+        turtle.setpos(-50,-25)
+        turtle.pd()
+        turtle.setpos(50,-25)
+        turtle.setpos(75,25)
+        turtle.setpos(-25,25)
+        turtle.setpos(-50,-25)
+    elif s=='t':
+        turtle.pu()
+        turtle.setpos(-100,-25)
+        turtle.pd()
+        turtle.setpos(100,-25)
+        turtle.setpos(75,25)
+        turtle.setpos(-75,25)
+        turtle.setpos(-100,-25)
+    elif s=='u':
+        turtle.pd()
+        turtle.setpos(-100,-100)
+        turtle.setpos(100,54)
+        turtle.setpos(54,108)
+        turtle.setpos(0,0)
+draw(turtle,sides)
+screen.mainloop()
